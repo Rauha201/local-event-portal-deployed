@@ -1,0 +1,150 @@
+{
+  "info": {
+    "name": "LocalLoop — Local Event Portal",
+    "description": "Every endpoint built across Parts 1–3. Set the {{baseUrl}} variable (defaults to http://localhost:5000) and run requests top to bottom — later ones reuse tokens/IDs saved by earlier ones via a small test script on each request.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000" },
+    { "key": "userToken", "value": "" },
+    { "key": "managerToken", "value": "" },
+    { "key": "eventId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "1. Register a user",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/users/register",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"fullName\": \"Test User\",\n  \"email\": \"test.user@example.com\",\n  \"password\": \"test1234\"\n}"
+        }
+      },
+      "event": [{
+        "listen": "test",
+        "script": { "exec": ["pm.collectionVariables.set('userToken', pm.response.json().token);"] }
+      }]
+    },
+    {
+      "name": "2. Register a manager",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/managers/register",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"fullName\": \"Test Manager\",\n  \"email\": \"test.manager@example.com\",\n  \"password\": \"test1234\"\n}"
+        }
+      },
+      "event": [{
+        "listen": "test",
+        "script": { "exec": ["pm.collectionVariables.set('managerToken', pm.response.json().token);"] }
+      }]
+    },
+    {
+      "name": "3. Create an event (as manager)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{managerToken}}" }
+        ],
+        "url": "{{baseUrl}}/api/events",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Test Concert\",\n  \"description\": \"A Postman-created event\",\n  \"category\": \"Concert\",\n  \"eventDate\": \"2099-01-01\",\n  \"eventTime\": \"19:00\",\n  \"location\": \"Test Hall\",\n  \"organizer\": \"Test Manager\",\n  \"ticketPrice\": 10,\n  \"maxParticipants\": 2\n}"
+        }
+      },
+      "event": [{
+        "listen": "test",
+        "script": { "exec": ["pm.collectionVariables.set('eventId', pm.response.json().event_id);"] }
+      }]
+    },
+    {
+      "name": "4. List all events (public)",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/events" }
+    },
+    {
+      "name": "5. Get one event by id (public)",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/events/{{eventId}}" }
+    },
+    {
+      "name": "6. Register for the event (as user)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{userToken}}" }
+        ],
+        "url": "{{baseUrl}}/api/registrations",
+        "body": { "mode": "raw", "raw": "{\n  \"eventId\": {{eventId}}\n}" }
+      }
+    },
+    {
+      "name": "7. Register again — expect 400 'already registered'",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{userToken}}" }
+        ],
+        "url": "{{baseUrl}}/api/registrations",
+        "body": { "mode": "raw", "raw": "{\n  \"eventId\": {{eventId}}\n}" }
+      }
+    },
+    {
+      "name": "8. View my registrations (as user)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{userToken}}" }],
+        "url": "{{baseUrl}}/api/registrations/mine"
+      }
+    },
+    {
+      "name": "9. View participants (as manager, owns the event)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{managerToken}}" }],
+        "url": "{{baseUrl}}/api/registrations/event/{{eventId}}"
+      }
+    },
+    {
+      "name": "10. Update the event (as manager)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{managerToken}}" }
+        ],
+        "url": "{{baseUrl}}/api/events/{{eventId}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Test Concert (Updated)\",\n  \"category\": \"Concert\",\n  \"eventDate\": \"2099-01-02\",\n  \"eventTime\": \"20:00\",\n  \"location\": \"Test Hall\",\n  \"organizer\": \"Test Manager\",\n  \"ticketPrice\": 15,\n  \"maxParticipants\": 2\n}"
+        }
+      }
+    },
+    {
+      "name": "11. Try deleting as the WRONG manager — expect 403",
+      "request": {
+        "method": "DELETE",
+        "header": [{ "key": "Authorization", "value": "Bearer {{userToken}}" }],
+        "url": "{{baseUrl}}/api/events/{{eventId}}",
+        "description": "Uses the user's token on purpose — authorize('manager') should reject this with 403 before ownership is even checked."
+      }
+    },
+    {
+      "name": "12. Delete the event (as its manager)",
+      "request": {
+        "method": "DELETE",
+        "header": [{ "key": "Authorization", "value": "Bearer {{managerToken}}" }],
+        "url": "{{baseUrl}}/api/events/{{eventId}}"
+      }
+    },
+    {
+      "name": "13. Health check",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/health" }
+    }
+  ]
+}

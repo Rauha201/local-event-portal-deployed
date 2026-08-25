@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Browse Events — LocalLoop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Karla:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/js/tailwind-config.js"></script>
+  <style>
+    body { font-family: 'Karla', sans-serif; }
+  </style>
+</head>
+<body class="bg-cloth text-ink font-body">
+
+  <div id="site-header"></div>
+
+  <main class="max-w-6xl mx-auto px-5 py-12">
+    <div class="text-center max-w-xl mx-auto">
+      <p class="font-stub text-xs tracking-[0.2em] uppercase text-moss">Browse</p>
+      <h1 class="font-display font-semibold text-3xl mt-2">All Events</h1>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-4 mt-8 max-w-2xl mx-auto">
+      <input id="search-input" type="text" placeholder="Search by title..." class="flex-1 rounded-md border border-ink/20 bg-paper px-4 py-3 focus:outline-none focus:ring-2 focus:ring-ember" />
+      <select id="category-filter" class="rounded-md border border-ink/20 bg-paper px-4 py-3 focus:outline-none focus:ring-2 focus:ring-ember">
+        <option value="">All Categories</option>
+        <option>Concert</option>
+        <option>Meetup</option>
+        <option>Workshop</option>
+        <option>Sports</option>
+        <option>Festival</option>
+      </select>
+    </div>
+
+    <p id="results-count" class="text-center text-sm text-ink/50 mt-4"></p>
+
+    <div id="results" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8"></div>
+  </main>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/sample-data.js"></script>
+  <script src="/js/events.js"></script>
+</body>
+</html>

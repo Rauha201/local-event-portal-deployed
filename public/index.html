@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LocalLoop — Local Event Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Karla:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/js/tailwind-config.js"></script>
+  <style>
+    body { font-family: 'Karla', sans-serif; }
+  </style>
+</head>
+<body class="bg-cloth text-ink font-body">
+
+  <!-- ============ NAVBAR ============ -->
+  <div id="site-header"></div>
+
+  <!-- ============ HERO — a flyer pinned to the community wall ============ -->
+  <section class="relative bg-dusk overflow-hidden">
+    <div class="relative max-w-3xl mx-auto px-5 pt-20 pb-28 flex justify-center">
+      <div class="relative -rotate-2 bg-paper rounded-lg shadow-2xl px-8 py-10 sm:px-14 sm:py-14 max-w-xl">
+        <span class="absolute -top-4 left-1/2 -translate-x-1/2 text-3xl drop-shadow-md" aria-hidden="true">📌</span>
+        <p class="font-stub text-xs tracking-[0.2em] uppercase text-ember text-center">This week, near you</p>
+        <h1 class="font-display font-semibold text-3xl sm:text-4xl text-ink text-center mt-3 leading-tight">
+          Find What's&nbsp;On, Tonight
+        </h1>
+        <p class="text-ink/70 text-center mt-4 leading-relaxed">
+          Concerts, workshops, meetups and festivals — posted by the people running them, in your own community.
+        </p>
+        <div class="mt-7 flex flex-wrap justify-center gap-3">
+          <a href="/events.html" class="px-6 py-3 rounded-full bg-ember text-white font-medium hover:bg-ember-600 transition-colors">Browse Events</a>
+          <a id="post-event-link" href="/register.html" class="px-6 py-3 rounded-full border-2 border-ink text-ink font-medium hover:bg-ink hover:text-white transition-colors">Post an Event</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- torn-paper edge, transitioning the dusk hero into the page -->
+    <svg class="absolute bottom-0 left-0 w-full h-10 sm:h-12" viewBox="0 0 1200 48" preserveAspectRatio="none" aria-hidden="true">
+      <path fill="#FBF8F3" d="M0,48 L0,30 L40,10 L80,14 L120,8 L160,12 L200,12 L240,30 L280,8 L320,28 L360,8 L400,12 L440,14 L480,14 L520,12 L560,28 L600,12 L640,14 L680,8 L720,12 L760,28 L800,8 L840,14 L880,8 L920,28 L960,8 L1000,10 L1040,32 L1080,14 L1120,10 L1160,12 L1200,32 L1200,48 Z" />
+    </svg>
+  </section>
+
+  <!-- ============ FEATURED EVENTS ============ -->
+  <section id="events" class="max-w-6xl mx-auto px-5 py-16 scroll-mt-20">
+    <div class="text-center max-w-xl mx-auto">
+      <p class="font-stub text-xs tracking-[0.2em] uppercase text-moss">Featured</p>
+      <h2 class="font-display font-semibold text-3xl mt-2">Events Worth Clearing Your Evening For</h2>
+      <p class="text-ink/60 mt-3">Posted by the managers running them, straight from the database.</p>
+    </div>
+    <div id="featured-events" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+      <!-- filled by main.js: createEventCard() -->
+    </div>
+  </section>
+
+  <!-- ============ CATEGORIES — pinned index cards ============ -->
+  <section id="categories" class="bg-paper/40 py-16 scroll-mt-20">
+    <div class="max-w-6xl mx-auto px-5">
+      <div class="text-center max-w-xl mx-auto">
+        <p class="font-stub text-xs tracking-[0.2em] uppercase text-moss">Browse by</p>
+        <h2 class="font-display font-semibold text-3xl mt-2">Categories</h2>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 mt-10 place-items-center">
+        <a href="/events.html?category=Concert" class="rotate-2 block bg-paper w-full max-w-[160px] rounded-md shadow-md px-4 py-6 text-center hover:rotate-0 transition-transform duration-300">
+          <span class="text-3xl" aria-hidden="true">🎤</span>
+          <p class="font-display font-semibold mt-2">Concert</p>
+        </a>
+        <a href="/events.html?category=Meetup" class="-rotate-2 block bg-paper w-full max-w-[160px] rounded-md shadow-md px-4 py-6 text-center hover:rotate-0 transition-transform duration-300">
+          <span class="text-3xl" aria-hidden="true">🤝</span>
+          <p class="font-display font-semibold mt-2">Meetup</p>
+        </a>
+        <a href="/events.html?category=Workshop" class="rotate-1 block bg-paper w-full max-w-[160px] rounded-md shadow-md px-4 py-6 text-center hover:rotate-0 transition-transform duration-300">
+          <span class="text-3xl" aria-hidden="true">🔧</span>
+          <p class="font-display font-semibold mt-2">Workshop</p>
+        </a>
+        <a href="/events.html?category=Sports" class="-rotate-1 block bg-paper w-full max-w-[160px] rounded-md shadow-md px-4 py-6 text-center hover:rotate-0 transition-transform duration-300">
+          <span class="text-3xl" aria-hidden="true">⚽</span>
+          <p class="font-display font-semibold mt-2">Sports</p>
+        </a>
+        <a href="/events.html?category=Festival" class="rotate-2 block bg-paper w-full max-w-[160px] rounded-md shadow-md px-4 py-6 text-center hover:rotate-0 transition-transform duration-300 col-span-2 sm:col-span-1">
+          <span class="text-3xl" aria-hidden="true">🎪</span>
+          <p class="font-display font-semibold mt-2">Festival</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ UPCOMING EVENTS — compact stub list ============ -->
+  <section class="max-w-4xl mx-auto px-5 py-16">
+    <div class="text-center max-w-xl mx-auto">
+      <p class="font-stub text-xs tracking-[0.2em] uppercase text-moss">Coming up</p>
+      <h2 class="font-display font-semibold text-3xl mt-2">Upcoming Events</h2>
+    </div>
+    <div id="upcoming-events" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+      <!-- filled by main.js: createEventCard() -->
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section id="about" class="bg-dusk text-cloth py-20 scroll-mt-20">
+    <div class="max-w-4xl mx-auto px-5 grid md:grid-cols-2 gap-10 items-center">
+      <div class="rounded-lg bg-cover bg-center h-56 md:h-72 bg-paper/20" style="background-image:url('/images/about-image.jpg')"></div>
+      <div>
+        <p class="font-stub text-xs tracking-[0.2em] uppercase text-marigold">About LocalLoop</p>
+        <h2 class="font-display font-semibold text-3xl mt-2">Built for the Board Outside the Corner Shop</h2>
+        <p class="text-cloth/80 mt-4 leading-relaxed">
+          Before there were apps, communities found out what was happening from a pinned flyer.
+          LocalLoop keeps that same directness — anyone running a local event can post it, and
+          anyone nearby can find it — just faster, and searchable.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" class="max-w-2xl mx-auto px-5 py-20 scroll-mt-20">
+    <div class="text-center">
+      <p class="font-stub text-xs tracking-[0.2em] uppercase text-moss">Get in touch</p>
+      <h2 class="font-display font-semibold text-3xl mt-2">Leave Us a Note</h2>
+    </div>
+
+    <form id="contact-form" class="bg-paper rounded-lg shadow-md p-6 sm:p-8 mt-10 space-y-4">
+      <div>
+        <label for="contact-name" class="block text-sm font-medium mb-1">Name</label>
+        <input id="contact-name" type="text" required class="w-full rounded-md border border-ink/20 bg-cloth px-3 py-2 focus:outline-none focus:ring-2 focus:ring-ember" />
+      </div>
+      <div>
+        <label for="contact-email" class="block text-sm font-medium mb-1">Email</label>
+        <input id="contact-email" type="email" required class="w-full rounded-md border border-ink/20 bg-cloth px-3 py-2 focus:outline-none focus:ring-2 focus:ring-ember" />
+      </div>
+      <div>
+        <label for="contact-msg" class="block text-sm font-medium mb-1">Message</label>
+        <textarea id="contact-msg" rows="4" required class="w-full rounded-md border border-ink/20 bg-cloth px-3 py-2 focus:outline-none focus:ring-2 focus:ring-ember"></textarea>
+      </div>
+      <button type="submit" class="w-full py-3 rounded-full bg-ember text-white font-medium hover:bg-ember-600 transition-colors">Send Message</button>
+      <p id="contact-message" class="hidden text-sm text-moss text-center"></p>
+    </form>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="bg-dusk text-cloth/80">
+    <div class="max-w-6xl mx-auto px-5 py-10 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
+      <p class="font-display text-cloth font-semibold">LocalLoop</p>
+      <div class="flex gap-6">
+        <a href="/index.html" class="hover:text-white transition-colors">Home</a>
+        <a href="/events.html" class="hover:text-white transition-colors">Events</a>
+        <a href="#about" class="hover:text-white transition-colors">About</a>
+        <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+      </div>
+      <p>&copy; <span id="year"></span> LocalLoop. A university project.</p>
+    </div>
+  </footer>
+
+  <script src="/js/sample-data.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>

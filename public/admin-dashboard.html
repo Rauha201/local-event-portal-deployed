@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — LocalLoop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Karla:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/js/tailwind-config.js"></script>
+  <style>
+    body { font-family: 'Karla', sans-serif; }
+  </style>
+</head>
+<body class="bg-cloth text-ink font-body min-h-screen">
+
+  <div class="flex min-h-screen">
+    <!-- Sidebar (desktop) -->
+    <aside class="hidden md:flex md:flex-col w-64 bg-dusk py-6 flex-shrink-0">
+      <div class="admin-nav-slot w-full"></div>
+    </aside>
+
+    <div class="flex-1 min-w-0">
+      <!-- Top bar (mobile) -->
+      <header class="md:hidden sticky top-0 z-50 bg-dusk px-5 py-4 flex items-center justify-between">
+        <a href="/admin-dashboard.html" class="font-display font-bold text-lg text-cloth">LocalLoop <span class="text-marigold font-stub text-xs align-middle">ADMIN</span></a>
+        <button id="admin-mobile-menu-btn" class="p-2 text-cloth" aria-label="Toggle menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+        </button>
+      </header>
+      <div id="admin-nav-mobile-wrap" class="hidden md:hidden bg-dusk px-2 pb-4">
+        <div class="admin-nav-slot"></div>
+      </div>
+
+      <main class="max-w-5xl mx-auto px-5 py-10">
+        <p class="font-stub text-xs tracking-[0.2em] uppercase text-moss">Admin Dashboard</p>
+        <h1 class="font-display font-semibold text-3xl mt-1">Overview</h1>
+
+        <p id="error-message" class="hidden mt-6 text-sm text-red-600 bg-red-50 rounded-md px-4 py-3"></p>
+
+        <!-- Stat cards -->
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+          <div class="bg-paper rounded-lg shadow-sm p-5">
+            <p class="font-stub text-[11px] uppercase tracking-widest text-moss">Total Users</p>
+            <p id="stat-users" class="font-display font-semibold text-3xl mt-2">—</p>
+          </div>
+          <div class="bg-paper rounded-lg shadow-sm p-5">
+            <p class="font-stub text-[11px] uppercase tracking-widest text-moss">Total Managers</p>
+            <p id="stat-managers" class="font-display font-semibold text-3xl mt-2">—</p>
+          </div>
+          <div class="bg-paper rounded-lg shadow-sm p-5">
+            <p class="font-stub text-[11px] uppercase tracking-widest text-moss">Total Events</p>
+            <p id="stat-events" class="font-display font-semibold text-3xl mt-2">—</p>
+          </div>
+          <div class="bg-paper rounded-lg shadow-sm p-5">
+            <p class="font-stub text-[11px] uppercase tracking-widest text-moss">Total Registrations</p>
+            <p id="stat-registrations" class="font-display font-semibold text-3xl mt-2">—</p>
+          </div>
+        </div>
+
+        <!-- Recent activity -->
+        <div class="mt-10">
+          <h2 class="font-display font-semibold text-xl">Recent Activities</h2>
+          <div id="activity-list" class="mt-4 space-y-2"></div>
+          <p id="activity-empty" class="hidden text-center text-ink/60 py-10">Nothing has happened yet.</p>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/js/admin.js"></script>
+  <script src="/js/admin-dashboard.js"></script>
+</body>
+</html>

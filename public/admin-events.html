@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Events — LocalLoop Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Karla:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/js/tailwind-config.js"></script>
+  <style>
+    body { font-family: 'Karla', sans-serif; }
+  </style>
+</head>
+<body class="bg-cloth text-ink font-body min-h-screen">
+
+  <div class="flex min-h-screen">
+    <aside class="hidden md:flex md:flex-col w-64 bg-dusk py-6 flex-shrink-0">
+      <div class="admin-nav-slot w-full"></div>
+    </aside>
+
+    <div class="flex-1 min-w-0">
+      <header class="md:hidden sticky top-0 z-50 bg-dusk px-5 py-4 flex items-center justify-between">
+        <a href="/admin-dashboard.html" class="font-display font-bold text-lg text-cloth">LocalLoop <span class="text-marigold font-stub text-xs align-middle">ADMIN</span></a>
+        <button id="admin-mobile-menu-btn" class="p-2 text-cloth" aria-label="Toggle menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+        </button>
+      </header>
+      <div id="admin-nav-mobile-wrap" class="hidden md:hidden bg-dusk px-2 pb-4">
+        <div class="admin-nav-slot"></div>
+      </div>
+
+      <main class="max-w-5xl mx-auto px-5 py-10">
+        <div class="flex items-center justify-between flex-wrap gap-3">
+          <div>
+            <p class="font-stub text-xs tracking-[0.2em] uppercase text-moss">Admin</p>
+            <h1 class="font-display font-semibold text-3xl mt-1">Events</h1>
+          </div>
+          <input id="search-input" type="search" placeholder="Search by title, category or location…"
+            class="w-full sm:w-72 rounded-md border border-ink/20 bg-paper px-3 py-2 focus:outline-none focus:ring-2 focus:ring-ember" />
+        </div>
+
+        <p id="error-message" class="hidden mt-6 text-sm text-red-600 bg-red-50 rounded-md px-4 py-3"></p>
+
+        <div class="mt-8 bg-paper rounded-lg shadow-sm overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="text-left border-b border-ink/10 font-stub text-[11px] uppercase tracking-widest text-ink/60">
+                <th class="px-4 py-3">Title</th>
+                <th class="px-4 py-3">Category</th>
+                <th class="px-4 py-3">Date</th>
+                <th class="px-4 py-3">Manager</th>
+                <th class="px-4 py-3 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="events-table-body"></tbody>
+          </table>
+        </div>
+        <p id="empty-state" class="hidden text-center text-ink/60 py-12">No events found.</p>
+      </main>
+    </div>
+  </div>
+
+  <div id="detail-modal" class="hidden fixed inset-0 bg-ink/50 flex items-center justify-center px-5 z-50">
+    <div class="bg-paper rounded-lg shadow-2xl max-w-md w-full p-6">
+      <h2 class="font-display font-semibold text-xl">Event Details</h2>
+      <div id="detail-content" class="mt-4 space-y-2 text-sm"></div>
+      <button id="detail-close-btn" class="mt-6 w-full px-5 py-2.5 rounded-full border-2 border-ink text-ink font-medium hover:bg-ink hover:text-white transition-colors">Close</button>
+    </div>
+  </div>
+
+  <script src="/js/admin.js"></script>
+  <script src="/js/admin-events.js"></script>
+</body>
+</html>

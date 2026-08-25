@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manager Dashboard — LocalLoop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Karla:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/js/tailwind-config.js"></script>
+  <style>
+    body { font-family: 'Karla', sans-serif; }
+  </style>
+</head>
+<body class="bg-cloth text-ink font-body">
+
+  <!-- Same nav structure/IDs as index.html, so main.js works unchanged here too -->
+  <div id="site-header"></div>
+
+  <main class="max-w-4xl mx-auto px-5 py-12">
+    <div class="flex items-center justify-between flex-wrap gap-3">
+      <div>
+        <p class="font-stub text-xs tracking-[0.2em] uppercase text-moss">Manager Dashboard</p>
+        <h1 class="font-display font-semibold text-3xl mt-1">Your Events</h1>
+      </div>
+      <button id="new-event-btn" class="px-5 py-3 rounded-full bg-ember text-white font-medium hover:bg-ember-600 transition-colors">
+        + New Event
+      </button>
+    </div>
+
+    <!-- EVENT FORM — one form shared by both Create and Edit -->
+    <form id="event-form" class="hidden bg-paper rounded-lg shadow-md p-6 sm:p-8 mt-8 space-y-4 scroll-mt-24">
+      <h2 id="form-heading" class="font-display font-semibold text-xl">New Event</h2>
+      <input type="hidden" id="event-id" />
+
+      <div>
+        <label for="title" class="block text-sm font-medium mb-1">Title</label>
+        <input id="title" required class="w-full rounded-md border border-ink/20 bg-cloth px-3 py-2 focus:outline-none focus:ring-2 focus:ring-ember" />
+      </div>
+
+      <div>
+        <label for="description" class="block text-sm font-medium mb-1">Description</label>
+        <textarea id="description" rows="3" class="w-full rounded-md border border-ink/20 bg-cloth px-3 py-2 focus:outline-none focus:ring-2 focus:ring-ember"></textarea>
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div>
+          <label for="category" class="block text-sm font-medium mb-1">Category</label>
+          <select id="category" required class="w-full rounded-md border border-ink/20 bg-cloth px-3 py-2 focus:outline-none focus:ring-2 focus:ring-ember">
+            <option value="">Select one</option>
+            <option>Concert</option>
+            <option>Meetup</option>
+            <option>Workshop</option>
+            <option>Sports</option>
+            <option>Festival</option>
+          </select>
+        </div>
+        <div>
+          <label for="organizer" class="block text-sm font-medium mb-1">Organizer</label>
+          <input id="organizer" required class="w-full rounded-md border border-ink/20 bg-cloth px-3 py-2 focus:outline-none focus:ring-2 focus:ring-ember" />
+        </div>
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div>
+          <label for="eventDate" class="block text-sm font-medium mb-1">Date</label>
+          <input id="eventDate" type="date" required class="w-full rounded-md border border-ink/20 bg-cloth px-3 py-2 focus:outline-none focus:ring-2 focus:ring-ember" />
+        </div>
+        <div>
+          <label for="eventTime" class="block text-sm font-medium mb-1">Time</label>
+          <input id="eventTime" type="time" required class="w-full rounded-md border border-ink/20 bg-cloth px-3 py-2 focus:outline-none focus:ring-2 focus:ring-ember" />
+        </div>
+      </div>
+
+      <div>
+        <label for="location" class="block text-sm font-medium mb-1">Location</label>
+        <input id="location" required class="w-full rounded-md border border-ink/20 bg-cloth px-3 py-2 focus:outline-none focus:ring-2 focus:ring-ember" />
+      </div>
+
+      <div class="grid sm:grid-cols-3 gap-4">
+        <div>
+          <label for="ticketPrice" class="block text-sm font-medium mb-1">Ticket Price</label>
+          <input id="ticketPrice" type="number" min="0" step="0.01" value="0" required class="w-full rounded-md border border-ink/20 bg-cloth px-3 py-2 focus:outline-none focus:ring-2 focus:ring-ember" />
+        </div>
+        <div>
+          <label for="maxParticipants" class="block text-sm font-medium mb-1">Max Participants</label>
+          <input id="maxParticipants" type="number" min="1" value="50" required class="w-full rounded-md border border-ink/20 bg-cloth px-3 py-2 focus:outline-none focus:ring-2 focus:ring-ember" />
+        </div>
+        <div>
+          <label for="image" class="block text-sm font-medium mb-1">Image filename</label>
+          <input id="image" placeholder="event-placeholder-1.jpg" class="w-full rounded-md border border-ink/20 bg-cloth px-3 py-2 focus:outline-none focus:ring-2 focus:ring-ember" />
+        </div>
+      </div>
+      <p class="text-xs text-ink/50 -mt-2">
+        Just the filename — save the actual picture into <code>public/images/</code> first (see <code>public/images/README.md</code>).
+      </p>
+
+      <p id="form-message" class="hidden text-sm text-red-600"></p>
+
+      <div class="flex gap-3">
+        <button type="submit" id="submit-btn" class="px-6 py-3 rounded-full bg-ember text-white font-medium hover:bg-ember-600 transition-colors">Create Event</button>
+        <button type="button" id="cancel-btn" class="px-6 py-3 rounded-full border-2 border-ink text-ink font-medium hover:bg-ink hover:text-white transition-colors">Cancel</button>
+      </div>
+    </form>
+
+    <!-- EVENT LIST -->
+    <div id="event-list" class="mt-10 space-y-4"></div>
+    <p id="empty-state" class="hidden text-center text-ink/60 py-12">
+      You haven't posted any events yet. Click "+ New Event" to create your first one.
+    </p>
+  </main>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>

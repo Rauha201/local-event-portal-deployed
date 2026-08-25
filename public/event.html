@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Event — LocalLoop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Karla:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/js/tailwind-config.js"></script>
+  <style>
+    body { font-family: 'Karla', sans-serif; }
+  </style>
+</head>
+<body class="bg-cloth text-ink font-body">
+
+  <div id="site-header"></div>
+
+  <main class="max-w-3xl mx-auto px-5 py-12">
+    <div id="event-root">
+      <div id="event-image" class="h-56 sm:h-72 rounded-lg bg-moss-100 bg-cover bg-center"></div>
+
+      <div class="mt-6">
+        <span id="event-category" class="font-stub text-xs uppercase tracking-widest text-moss bg-moss-100 px-2 py-1 rounded"></span>
+        <h1 id="event-title" class="font-display font-semibold text-3xl mt-3"></h1>
+        <p id="event-organizer" class="text-ink/60 mt-1"></p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-4 mt-6 bg-paper rounded-lg p-5">
+        <div>
+          <p class="font-stub text-xs uppercase tracking-widest text-ink/50">When</p>
+          <p id="event-datetime" class="font-medium mt-1"></p>
+        </div>
+        <div>
+          <p class="font-stub text-xs uppercase tracking-widest text-ink/50">Where</p>
+          <p id="event-location" class="font-medium mt-1"></p>
+        </div>
+        <div>
+          <p class="font-stub text-xs uppercase tracking-widest text-ink/50">Price</p>
+          <p id="event-price" class="font-medium mt-1 text-ember"></p>
+        </div>
+        <div>
+          <p class="font-stub text-xs uppercase tracking-widest text-ink/50">Rating</p>
+          <p id="event-rating" class="font-medium mt-1 text-marigold"></p>
+        </div>
+        <div class="sm:col-span-2">
+          <p class="font-stub text-xs uppercase tracking-widest text-ink/50">Availability</p>
+          <p id="event-capacity" class="font-medium mt-1"></p>
+        </div>
+      </div>
+
+      <div class="mt-8">
+        <h2 class="font-display font-semibold text-xl">About this event</h2>
+        <p id="event-description" class="text-ink/70 mt-2 leading-relaxed"></p>
+      </div>
+
+      <div class="mt-8 bg-paper rounded-lg p-5">
+        <h2 class="font-display font-semibold text-xl mb-3">Register</h2>
+        <div id="registration-section"></div>
+      </div>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a id="gcal-link" href="#" target="_blank" rel="noopener" class="px-5 py-2 rounded-full border-2 border-ink text-ink font-medium hover:bg-ink hover:text-white transition-colors text-sm">
+          Add to Google Calendar
+        </a>
+        <button id="ics-btn" class="px-5 py-2 rounded-full border-2 border-ink text-ink font-medium hover:bg-ink hover:text-white transition-colors text-sm">
+          Download .ics
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/event-details.js"></script>
+</body>
+</html>

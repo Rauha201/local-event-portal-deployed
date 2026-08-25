@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Registrations — LocalLoop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Karla:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/js/tailwind-config.js"></script>
+  <style>
+    body { font-family: 'Karla', sans-serif; }
+  </style>
+</head>
+<body class="bg-cloth text-ink font-body">
+
+  <div id="site-header"></div>
+
+  <main class="max-w-3xl mx-auto px-5 py-12">
+    <p class="font-stub text-xs tracking-[0.2em] uppercase text-moss">Your account</p>
+    <h1 class="font-display font-semibold text-3xl mt-2">My Registrations</h1>
+
+    <div id="registrations-list" class="mt-8 space-y-4"></div>
+    <p id="empty-state" class="hidden text-center text-ink/60 py-12">
+      You haven't registered for any events yet. <a href="/events.html" class="text-ember underline">Browse events</a>.
+    </p>
+  </main>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/registrations.js"></script>
+</body>
+</html>
